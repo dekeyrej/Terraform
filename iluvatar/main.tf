@@ -11,7 +11,8 @@ module "containers" {
   static_ip      = each.value.static_ip
   cores          = each.value.cores
   memory         = each.value.memory
-  template       = each.value.ostemplate
+  template       = each.value.osimage
+  os             = each.value.os
   diskpool       = each.value.diskpool
   disk           = each.value.disk
   pool           = each.value.pool
@@ -30,7 +31,8 @@ module "virtual_machines" {
   static_ip      = each.value.static_ip
   cores          = each.value.cores
   memory         = each.value.memory
-  diskimage      = each.value.osimage
+  template       = each.value.osimage
+  os             = each.value.os
   diskpool       = each.value.diskpool
   disk           = each.value.disk
   pool           = each.value.pool
@@ -40,24 +42,30 @@ data "local_file" "ssh_public_key" {
   filename = "/home/ubuntu/.ssh/id_rsa.pub"
 }
 
-output "container_info" {
-  value = {
-    for name, module in module.containers :
-    name => {
-      vm_id      = module.vm_id
-      hostname   = module.hostname
-      ip_address = module.ip_address
+output "all_nodes_info" {
+  value = merge(
+    {
+      for name, module in module.containers :
+      name => {
+        vm_id      = module.vm_id
+        hostname   = module.hostname
+        ip_address = module.ip_address
+        os         = module.os
+        type       = module.type
+      }
+    },
+    {
+      for name, module in module.virtual_machines :
+      name => {
+        vm_id      = module.vm_id
+        hostname   = module.hostname
+        ip_address = module.ip_address
+        os         = module.os
+        type       = module.type
+      }
     }
-  }
+  )
 }
 
-output "virtual_machine_info" {
-  value = {
-    for name, module in module.virtual_machines :
-    name => {
-      vm_id      = module.vm_id
-      hostname   = module.hostname
-      ip_address = module.ip_address
-    }
-  }
-}
+## tofu output -json all_nodes_info | jq -r 'to_entries[] | "\(.key) \(.value.ip_address)"' > inventory
+## tofu output -json all_nodes_info | jq -r 'to_entries[] | "\(.key) static_ip=\(.value.ip_address | split("/")[0]) vmid=\(.value.vm_id) type=\(.value.type) os=\(.value.os)"' > inventory
