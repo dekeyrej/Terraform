@@ -23,7 +23,7 @@ locals {
         cores = 4
         memory = 16384
         disk =  50
-        osimage = "local:import/noble-server-cloudimg-amd64.qcow2"
+        osimage = "local:import/plucky-server-cloudimg-amd64.qcow2"
         os = "ubuntu"
         diskpool = "nvme_pool"
         pool = "BluePolaris"
@@ -35,8 +35,8 @@ locals {
         cores = 4
         memory = 16384
         disk =  50
-        osimage = "local:import/noble-server-cloudimg-amd64.qcow2"
-        os = "ubuntu"
+        osimage = "local:import/debian-12-genericcloud-amd64.qcow2"
+        os = "debian"
         diskpool = "nvme_pool"
         pool = "BluePolaris"
     }
@@ -47,8 +47,8 @@ locals {
         cores = 8
         memory = 16384
         disk =  50
-        osimage = "local:import/noble-server-cloudimg-amd64.qcow2"
-        os = "ubuntu"
+        osimage = "local:import/debian-13-genericcloud-amd64.qcow2"
+        os = "debian"
         diskpool = "local-lvm"
         pool = "CloudFish"
     }
@@ -85,8 +85,8 @@ locals {
         cores = 2
         memory = 2048
         disk = 10
-        osimage = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-        os = "ubuntu"
+        osimage = "local:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+        os = "debian"
         diskpool = "local-lvm"
         pool = "BluePolaris"
     }
@@ -97,8 +97,8 @@ locals {
         cores = 2
         memory = 16384
         disk = 100
-        osimage = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-        os = "ubuntu"
+        osimage = "local:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+        os = "debian"
         diskpool = "nvme_pool"
         pool = "BluePolaris"
     }
