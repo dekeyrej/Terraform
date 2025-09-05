@@ -1,0 +1,2 @@
+balboa    static_ip=192.168.50.67 vmid=108 type=lxc os=ubuntu
+india    static_ip=192.168.50.68 vmid=200 type=kvm os=ubuntu
