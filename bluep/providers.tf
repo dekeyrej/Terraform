@@ -18,6 +18,7 @@ provider "proxmox" {
 variable "virtual_environment_endpoint" {
   description = "Proxmox API endpoint"
   type        = string
+  default     = "https://proxmox.example.com:8006/"
 }
 
 variable "virtual_environment_insecure" {
@@ -29,11 +30,13 @@ variable "virtual_environment_insecure" {
 variable "virtual_environment_username" {
   description = "Proxmox username with realm"
   type        = string
+  default     = "root@pam"
 }
 
 variable "virtual_environment_password" {
   description = "Proxmox password"
   type        = string
+  default     = "your_password"
   sensitive   = true
 }
 
