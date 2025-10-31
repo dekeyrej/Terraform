@@ -42,5 +42,7 @@ resource "proxmox_virtual_environment_container" "container" {
   disk {
     datastore_id = var.diskpool
     size         = var.disk
-  }  
+  }
+
+  # hook_script_file_id = var.hookscript != "" ? var.hookscript : null
 }

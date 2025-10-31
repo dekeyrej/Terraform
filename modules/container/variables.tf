@@ -76,3 +76,9 @@ variable "ssh_public_key" {
   type        = list(string)
   description = "SSH public key for root access"
 }
+
+variable "hookscript" {
+  type        = string
+  description = "Hook script to run on container events"
+  default     = ""
+}

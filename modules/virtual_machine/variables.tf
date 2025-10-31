@@ -22,11 +22,13 @@ variable "name" {
 variable "static_ip" {
   type        = string
   description = "Static IP address for the VM"
+  default     = "dhcp"
 }
 
 variable "gateway" {
   type        = string
   description = "Gateway for the VM"
+  default     = "192.168.86.1"
 }
 
 variable "cores" {

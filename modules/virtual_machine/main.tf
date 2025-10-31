@@ -8,6 +8,13 @@ resource "proxmox_virtual_environment_vm" "virtual_machine" {
   name      = var.name
   vm_id     = var.vmid
 
+  # dynamic "vm_id" {
+  #   for_each = var.vmid == 0 ? [1] : []
+  #   content {
+  #     vm_id = random_integer.vmid.result
+  #   }
+  # }
+
   initialization {
     datastore_id = var.diskpool
     ip_config {
@@ -44,10 +51,8 @@ resource "proxmox_virtual_environment_vm" "virtual_machine" {
 
   disk {
     datastore_id = var.diskpool
-    file_id      = var.template
+    import_from  = var.template
     interface    = "virtio0"
-    iothread     = true
-    discard      = "on"
     size         = var.disk
   }
   
