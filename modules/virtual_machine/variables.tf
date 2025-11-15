@@ -70,9 +70,15 @@ variable "diskpool" {
   default     = "local-lvm"
 }
 
-variable "disk" {
+variable "bootdisk" {
   type        = number
   default     = 10
+  description = "Disk size in GB"  
+}
+
+variable "extradisk" {
+  type        = number
+  default     = 0
   description = "Disk size in GB"  
 }
 

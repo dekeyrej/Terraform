@@ -7,13 +7,19 @@ resource "proxmox_virtual_environment_vm" "virtual_machine" {
 
   name      = var.name
   vm_id     = var.vmid
+  description = <<-EOT
+    ### ${var.name} @ ${var.static_ip}
+    - Managed by Terraform
 
-  # dynamic "vm_id" {
-  #   for_each = var.vmid == 0 ? [1] : []
-  #   content {
-  #     vm_id = random_integer.vmid.result
-  #   }
-  # }
+    ### Running **Ubuntu 24.04-3**
+    
+    | **Hardware** | Value |
+    | --- | --- |
+    | **Cores** | ${var.cores} |
+    | **RAM** | ${var.memory} |
+    | **Bootdisk** | SCSI0 - ${var.bootdisk}G |
+    | **Cephdisk** | SCSI1 - ${var.extradisk}G |
+  EOT
 
   initialization {
     datastore_id = var.diskpool
@@ -52,9 +58,20 @@ resource "proxmox_virtual_environment_vm" "virtual_machine" {
   disk {
     datastore_id = var.diskpool
     import_from  = var.template
-    interface    = "virtio0"
-    size         = var.disk
+    interface    = "scsi0"
+    ssd          = true
+    size         = var.bootdisk
   }
-  
+
+  dynamic "disk" {
+    for_each = var.extradisk > 0 ? [1] : []
+    content {
+      datastore_id = var.diskpool
+      interface    = "scsi1"
+      ssd          = true
+      size         = var.extradisk
+    }
+  }
+
   serial_device {}
 }
